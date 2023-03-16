@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NavigationMenuUdemy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_home_fragment">This is Home fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_category_fragment">This is Category fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="txt_profile_fragment">This is Profile fragment</string>
+</resources>
