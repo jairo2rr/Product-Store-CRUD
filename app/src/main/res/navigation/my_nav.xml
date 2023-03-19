@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.navigationmenuudemy.HomeFragment"
+        android:name="com.example.navigationmenuudemy.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.example.navigationmenuudemy.CategoryFragment"
+        android:name="com.example.navigationmenuudemy.ui.category.CategoryFragment"
         android:label="Category"
         tools:layout="@layout/fragment_category" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.navigationmenuudemy.ProfileFragment"
+        android:name="com.example.navigationmenuudemy.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" >
         <action
