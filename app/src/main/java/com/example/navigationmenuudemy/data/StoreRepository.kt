@@ -37,4 +37,9 @@ class StoreRepository @Inject constructor(
         productDao.insertProduct(product.toEntity())
     }
 
+    suspend fun getCategoryXNameDB(name:String):List<Category>{
+        val response = categoryDao.findCategoryXName(name)
+        return response.map { it.toDomain() }
+    }
+
 }

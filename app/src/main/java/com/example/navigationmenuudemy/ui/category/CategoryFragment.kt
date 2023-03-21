@@ -36,6 +36,7 @@ class CategoryFragment : Fragment() {
         val adapter = CategoryAdapter(emptyList())
         binding.rvCategories.adapter = adapter
         viewmodel.listCategories.observe(viewLifecycleOwner){
+            Log.d("VALUECATEGORY", "UPDATELIST: $it")
             adapter.listCategories = it
             adapter.notifyDataSetChanged()
         }
@@ -43,8 +44,10 @@ class CategoryFragment : Fragment() {
 
     private fun openCreateNewOneDialog() {
         val dialog = DialogCategoryFragment {
-            if(it)
+            Log.d("VALUECATEGORY", "GET: $it")
+            if(it){
                 viewmodel.updateListCategories()
+            }
         }
         dialog.show(parentFragmentManager, "showDialog")
     }
