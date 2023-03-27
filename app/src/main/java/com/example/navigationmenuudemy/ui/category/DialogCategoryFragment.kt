@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,8 @@ import com.example.navigationmenuudemy.domain.model.Category
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-
 @AndroidEntryPoint
-class DialogCategoryFragment(private val onCreateCategory:(Boolean)->Unit): DialogFragment() {
+class DialogCategoryFragment(private val onCreateCategory:(Boolean)->Unit, private val category:Category?): DialogFragment() {
 
     private lateinit var binding: FragmentDialogCategoryBinding
     private val viewmodel:DialogCategoryViewModel by viewModels()
@@ -30,6 +30,10 @@ class DialogCategoryFragment(private val onCreateCategory:(Boolean)->Unit): Dial
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
+        if(category!= null){
+            binding.etCategoryName.setText(category.name)
+            binding.btnAdd.text = getString(R.string.txt_btn_update)
+        }
         binding.btnCancel.setOnClickListener { dismiss() }
         binding.btnAdd.setOnClickListener {
             val name = binding.etCategoryName.text.toString().let {
@@ -40,7 +44,11 @@ class DialogCategoryFragment(private val onCreateCategory:(Boolean)->Unit): Dial
                     requireActivity().toast("La categoria ya existe!")
                     return@launch
                 }
-                viewmodel.createCategory(Category(name))
+                if(category != null){
+                    viewmodel.editCategory(category.apply { this.name = name })
+                }else{
+                    viewmodel.createCategory(Category(name = name))
+                }
             }
             /*val exist = lifecycleScope.async {
                 viewmodel.findCategoryXName(name)

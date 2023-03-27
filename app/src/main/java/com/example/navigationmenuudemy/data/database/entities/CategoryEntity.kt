@@ -9,9 +9,10 @@ import com.example.navigationmenuudemy.domain.model.Category
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id:Int = 0,
-    @ColumnInfo(name = "name") val name:String,
+    @ColumnInfo(name = "name") var name:String,
 )
 
 fun Category.toEntity() = CategoryEntity(
+    id = id,
     name = name
 )

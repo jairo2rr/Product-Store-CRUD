@@ -26,4 +26,11 @@ class CategoryViewModel @Inject constructor(
             _listCategories.value = repository.getAllCategoriesDB()
         }
     }
+
+    fun deleteCategory(category: Category) {
+        viewModelScope.launch {
+            repository.deleteCategory(category)
+        }
+    }
+
 }

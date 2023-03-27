@@ -1,5 +1,6 @@
 package com.example.navigationmenuudemy.data
 
+import android.util.Log
 import com.example.navigationmenuudemy.data.database.dao.CategoryDao
 import com.example.navigationmenuudemy.data.database.dao.ProductDao
 import com.example.navigationmenuudemy.data.database.entities.CategoryEntity
@@ -42,4 +43,11 @@ class StoreRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
+    suspend fun updateCategory(category: Category){
+        categoryDao.updateCategory(category.toEntity())
+    }
+
+    suspend fun deleteCategory(category: Category){
+        categoryDao.deleteCategory(category.toEntity())
+    }
 }

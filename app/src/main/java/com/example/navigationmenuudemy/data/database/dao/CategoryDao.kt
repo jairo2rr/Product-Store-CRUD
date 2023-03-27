@@ -9,7 +9,7 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table ORDER BY id DESC")
     suspend fun getAllCategories():List<CategoryEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertCategory(category:CategoryEntity)
 
     @Delete
@@ -17,5 +17,8 @@ interface CategoryDao {
 
     @Query("SELECT * FROM category_table WHERE name=:name")
     suspend fun findCategoryXName(name:String):List<CategoryEntity>
+
+    @Update
+    suspend fun updateCategory(category: CategoryEntity)
 
 }
