@@ -48,6 +48,10 @@ class CategoryFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewmodel.updateListCategories()
+    }
     private fun onDeleteCategory(category: Category) {
         lastCategoryDeleted = category
         val position = adapter.removeItem(category)
