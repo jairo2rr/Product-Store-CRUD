@@ -1,5 +1,7 @@
 package com.example.navigationmenuudemy.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.navigationmenuudemy.data.StoreRepository
@@ -15,16 +17,23 @@ import javax.inject.Inject
 class DialogProductViewModel @Inject constructor(
     private val repository: StoreRepository
 ):ViewModel() {
-
-    fun createProduct(product: Product){
+    private val _isCreated = MutableLiveData<Boolean>(false)
+    val isCreated:LiveData<Boolean> = _isCreated
+    private var listCategories = emptyList<Category>()
+    fun createProduct(categoryName:String, name:String,price:Float,stock:Int):Boolean{
+        val category = listCategories.find { category -> category.name == categoryName } ?: return false
+        val product = Product(product=name,price=price,stock=stock,categoryId=category.id)
         viewModelScope.launch {
             repository.insertProduct(product)
+            _isCreated.value = true
         }
+        return true
     }
 
     suspend fun getCategories(): List<Category>{
         return withContext(Dispatchers.IO){
-            repository.getAllCategoriesDB()
+            listCategories = repository.getAllCategoriesDB()
+            listCategories
         }
     }
 

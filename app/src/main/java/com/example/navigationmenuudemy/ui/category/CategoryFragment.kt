@@ -17,7 +17,6 @@ class CategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentCategoryBinding
     private val viewmodel: CategoryViewModel by viewModels()
-    private var lastCategoryDeleted:Category? = null
 
     private lateinit var adapter:CategoryAdapter
 
@@ -43,7 +42,6 @@ class CategoryFragment : Fragment() {
         })
         binding.rvCategories.adapter = adapter
         viewmodel.listCategories.observe(viewLifecycleOwner) {
-            Log.d("VALUECATEGORY", "UPDATELIST: $it")
             adapter.setList(ArrayList(it))
         }
     }
@@ -52,9 +50,9 @@ class CategoryFragment : Fragment() {
         super.onStart()
         viewmodel.updateListCategories()
     }
+
     private fun onDeleteCategory(category: Category) {
-        lastCategoryDeleted = category
-        val position = adapter.removeItem(category)
+        adapter.removeItem(category)
         var isRestored = false
         Snackbar.make(binding.root, "${category.name} was deleted.", Snackbar.LENGTH_SHORT)
             .setAction("Cancel") {
@@ -65,17 +63,14 @@ class CategoryFragment : Fragment() {
                     super.onDismissed(transientBottomBar, event)
                     if(!isRestored){
                         viewmodel.deleteCategory(category)
-                        //viewmodel.updateListCategories()
                     }
                 }
             })
             .show()
-//        .makeText(context,"${category.name} was deleted.",Toast.LENGTH_SHORT).show()
     }
 
     private fun openCreateNewOneDialog(category: Category? = null) {
         val dialog = DialogCategoryFragment({
-            Log.d("VALUECATEGORY", "GET: $it")
             canUpdate(it)
         }, category = category)
         dialog.show(parentFragmentManager, "showDialog")

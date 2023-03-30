@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
-        android:hint="Select category"
+        android:hint="@string/txt_field_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
-        android:hint="Product name"
+        android:hint="@string/txt_field_product_name"
         app:layout_constraintEnd_toEndOf="@+id/layoutProductCategory"
         app:layout_constraintStart_toStartOf="@+id/layoutProductCategory"
         app:layout_constraintTop_toBottomOf="@+id/layoutProductCategory">
@@ -55,7 +55,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etProductName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,15 +65,15 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
-        android:hint="Price"
+        android:hint="@string/txt_field_price"
         app:layout_constraintEnd_toEndOf="@+id/layoutProductName"
         app:layout_constraintStart_toStartOf="@+id/layoutProductName"
         app:layout_constraintTop_toBottomOf="@+id/layoutProductName">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etProductPrice"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -89,7 +90,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etProductStock"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -99,7 +101,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="24dp"
-        android:text="Cancel"
+        android:textColor="@color/md_theme_light_onPrimary"
+        android:text="@string/txt_btn_cancel"
         android:backgroundTint="@color/md_theme_light_error"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/layoutProductStock"
@@ -110,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:text="Create"
+        android:text="@string/txt_btn_create"
         app:layout_constraintEnd_toEndOf="@+id/layoutProductStock"
         app:layout_constraintTop_toTopOf="@+id/btnCancel" />
 
