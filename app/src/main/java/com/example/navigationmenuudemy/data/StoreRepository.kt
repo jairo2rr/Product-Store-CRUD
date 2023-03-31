@@ -21,7 +21,7 @@ class StoreRepository @Inject constructor(
     }
 
     suspend fun getProductsForCategoryDB(categoryId:Int): List<Product> {
-        val response = productDao.findProductsForCategory(categoryId)
+        val response = productDao.findProductsFromCategory(categoryId)
         return response.map { it.toDomain() }
     }
 
@@ -49,5 +49,10 @@ class StoreRepository @Inject constructor(
 
     suspend fun deleteCategory(category: Category){
         categoryDao.deleteCategory(category.toEntity())
+    }
+
+    suspend fun findProductFromId(productId:Int):List<Product>{
+        val response = productDao.findProductFromId(productId)
+        return response.map { it.toDomain() }
     }
 }

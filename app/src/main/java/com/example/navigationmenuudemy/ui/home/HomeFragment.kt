@@ -31,8 +31,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = ProductAdapter(arrayListOf()){
-            //startProductActivity(it)
-            Log.d("SOMETHING","HOLA")
+            startProductActivity(it)
         }
 
         binding.rvProducts.adapter = adapter

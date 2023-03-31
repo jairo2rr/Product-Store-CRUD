@@ -16,7 +16,10 @@ interface ProductDao {
     suspend fun updateProduct(product:ProductEntity)
 
     @Query("SELECT * FROM product_table where categoryId=:categoryId")
-    suspend fun findProductsForCategory(categoryId:Int):List<ProductEntity>
+    suspend fun findProductsFromCategory(categoryId:Int):List<ProductEntity>
+
+    @Query("SELECT * FROM product_table where id=:productId")
+    suspend fun findProductFromId(productId:Int):List<ProductEntity>
 
     @Delete
     suspend fun deleteProduct(product: ProductEntity)
