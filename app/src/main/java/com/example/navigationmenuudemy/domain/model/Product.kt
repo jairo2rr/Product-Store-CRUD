@@ -7,6 +7,7 @@ data class Product(
     var product: String,
     var price: Float = 0.0f,
     var stock: Int = 0,
+    var uri:String,
     val categoryId: Int,
 )
 
@@ -15,5 +16,6 @@ fun ProductEntity.toDomain() = Product(
     product = product,
     price = price,
     stock = stock,
+    uri=uri,
     categoryId = categoryId
 )

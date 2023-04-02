@@ -17,5 +17,12 @@
     <string name="txt_field_price">Precio</string>
     <string name="txt_field_product_name">Nombre del producto</string>
     <string name="txt_field_category">Categoría</string>
+    <string name="txt_btn_add_cart">Agregar al carrito</string>
+    <string name="txt_btn_sell">Vender</string>
+    <string name="txt_title_dialog_product">Crear nuevo producto</string>
+    <string name="txt_btn_load_image">Cargar imagen</string>
+    <string name="txt_field_stock">Stock</string>
+    <string name="txt_snackbar_go">Ir</string>
+    <string name="txt_snackbar_permission">Debe aceptar los permisos para poder acceder a las imágenes.</string>
 
 </resources>
