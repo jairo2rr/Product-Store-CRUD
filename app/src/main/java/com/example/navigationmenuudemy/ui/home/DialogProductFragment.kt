@@ -17,19 +17,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.navigationmenuudemy.R
 import com.example.navigationmenuudemy.databinding.FragmentDialogProductBinding
-import com.example.navigationmenuudemy.ui.extension.isEmpty
-import com.example.navigationmenuudemy.ui.extension.snackbarWithAction
-import com.example.navigationmenuudemy.ui.extension.toast
+import com.example.navigationmenuudemy.domain.model.Product
+import com.example.navigationmenuudemy.ui.extension.*
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : DialogFragment() {
+class DialogProductFragment(
+    private val onCreateProduct: (Boolean) -> Unit,
+    private val product: Product? = null,
+) : DialogFragment() {
     private lateinit var binding: FragmentDialogProductBinding
     private val viewModel: DialogProductViewModel by viewModels()
     private val listCheck = mutableListOf<Boolean>(false, false, false, false)
@@ -50,9 +50,12 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
                 pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+                    ActivityCompat.requestPermissions(requireActivity(),
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        0)
                 } else {
-                    binding.root.snackbarWithAction(R.string.txt_snackbar_permission, textAction = R.string.txt_snackbar_go){
+                    binding.root.snackbarWithAction(R.string.txt_snackbar_permission,
+                        textAction = R.string.txt_snackbar_go) {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         val uri = Uri.fromParts("package", requireActivity().packageName, null)
                         intent.data = uri
@@ -76,13 +79,7 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
             if (checkErrorFields()) {
                 return@setOnClickListener
             }
-
-            val response = intentCreateProduct()
-            if (!response) {
-                toast("Ocurrió un error, intente denuevo.")
-                return@setOnClickListener
-            }
-            dismiss()
+            intentInsertProduct()
         }
         binding.atvSelectCategory.setOnItemClickListener { parent, _, position, _ ->
             lastItemSelected = parent.getItemAtPosition(position).toString()
@@ -91,7 +88,19 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
                 binding.layoutProductCategory.isErrorEnabled = false
             }
         }
-        setEventoForFields()
+        viewModel.isLoading.observe(this) {
+            turnVisibilityElements(!it)
+            binding.pbLoading visibleIf it
+        }
+        viewModel.listCategories.observe(this) { list ->
+            (binding.layoutProductCategory.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(
+                list.map { it.name }.toTypedArray())
+            if (product != null && list.isNotEmpty()) {
+                val item = list.find { it.id == product.categoryId }
+                binding.atvSelectCategory.setText(item!!.name, true)
+                lastItemSelected = item.name
+            }
+        }
         viewModel.isCreated.observe(this) {
             if (it) {
                 onCreateProduct(it)
@@ -106,28 +115,33 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        loadCategories()
+        viewModel.loadCategories()
+        setInfoProduct()
+        setEventForFields()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    private fun intentCreateProduct(): Boolean {
+    private fun intentInsertProduct() {
         val name = binding.etProductName.text.toString()
         val price = binding.etProductPrice.text.toString().toFloat()
         val stock = binding.etProductStock.text.toString().toInt()
-        return viewModel.createProduct(lastItemSelected!!, name, price, stock, uri)
+        if (product != null) {
+            viewModel.editProduct(product.copy(
+                product = name,
+                price = price,
+                stock = stock
+            ),lastItemSelected!!)
+            return
+        }
+        viewModel.createProduct(lastItemSelected!!, name, price, stock, uri)
     }
 
-    private fun loadCategories() {
-        lifecycleScope.launch {
-            turnVisibilityElements(false)
-            binding.pbLoading.visibility = View.VISIBLE
-            val listCategories = viewModel.getCategories().map { it.name }.toTypedArray()
-            binding.pbLoading.visibility = View.GONE
-            (binding.layoutProductCategory.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(
-                listCategories)
-            turnVisibilityElements(true)
-        }
-    }
+//    private fun intentCreateProduct(): Boolean {
+//        val name = binding.etProductName.text.toString()
+//        val price = binding.etProductPrice.text.toString().toFloat()
+//        val stock = binding.etProductStock.text.toString().toInt()
+//        return viewModel.createProduct(lastItemSelected!!, name, price, stock, uri)
+//    }
 
     private fun turnVisibilityElements(toShow: Boolean) {
         binding.layoutProductCategory.visibility = if (toShow) View.VISIBLE else View.GONE
@@ -138,7 +152,7 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
         binding.btnCancel.isEnabled = toShow
     }
 
-    private fun setEventoForFields() {
+    private fun setEventForFields() {
         with(binding) {
             etProductName.doOnTextChanged { text, _, _, _ ->
                 if (!text.isNullOrEmpty() && listCheck[1]) {
@@ -167,27 +181,31 @@ class DialogProductFragment(private val onCreateProduct: (Boolean) -> Unit) : Di
         with(binding) {
             val isTheSame = atvSelectCategory.text.toString().trim() == lastItemSelected
             val atCondition = lastItemSelected != null && isTheSame
-            if (!isTheSame) {
+            if (!isTheSame)
                 atvSelectCategory.setText("")
-            }
-            if (!atCondition) {
+            if (!atCondition)
                 layoutProductCategory.error = messageError
-            }
-            if (etProductName.isEmpty) {
+            if (etProductName.isEmpty)
                 layoutProductName.error = messageError
-            }
-            if (etProductPrice.isEmpty) {
+            if (etProductPrice.isEmpty)
                 layoutProductPrice.error = messageError
-            }
-            if (etProductStock.isEmpty) {
+            if (etProductStock.isEmpty)
                 layoutProductStock.error = messageError
-            }
             listCheck.addAll(arrayOf(!atCondition,
                 etProductName.isEmpty,
                 etProductPrice.isEmpty,
                 etProductStock.isEmpty))
         }
         return listCheck.contains(true)
+    }
+
+    private fun setInfoProduct() {
+        if (product != null) {
+            binding.etProductPrice.setText("${product.price}")
+            binding.etProductStock.setText("${product.stock}")
+            binding.etProductName.setText(product.product)
+            binding.btnAdd.setText(R.string.txt_btn_update)
+        }
     }
 
 }

@@ -28,4 +28,20 @@ class DetailProductViewModel @Inject constructor(
             _loading.value = false
         }
     }
+
+    fun updateInfoProduct(){
+        viewModelScope.launch {
+            _loading.value = true
+            _product.value = repository.findProductFromId(product.value!!.id).first()
+            _loading.value = false
+        }
+    }
+
+    fun deleteProduct() {
+        viewModelScope.launch {
+            _loading.value = true
+            repository.deleteProduct(product.value!!)
+            _loading.value = false
+        }
+    }
 }

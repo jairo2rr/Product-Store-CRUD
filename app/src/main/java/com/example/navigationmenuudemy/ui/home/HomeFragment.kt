@@ -77,4 +77,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.uploadProducts()
+    }
 }

@@ -25,6 +25,7 @@ data class CategoryWithProducts(
 )
 
 fun Product.toEntity() = ProductEntity(
+    id=id,
     product = product,
     price = price,
     stock = stock,

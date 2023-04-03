@@ -8,9 +8,7 @@ import com.example.navigationmenuudemy.data.StoreRepository
 import com.example.navigationmenuudemy.domain.model.Category
 import com.example.navigationmenuudemy.domain.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,22 +17,32 @@ class DialogProductViewModel @Inject constructor(
 ):ViewModel() {
     private val _isCreated = MutableLiveData<Boolean>(false)
     val isCreated:LiveData<Boolean> = _isCreated
-    private var listCategories = emptyList<Category>()
-    fun createProduct(categoryName:String, name:String,price:Float,stock:Int,uri:String):Boolean{
-        val category = listCategories.find { category -> category.name == categoryName } ?: return false
-        val product = Product(product=name,price=price,stock=stock,uri=uri,categoryId=category.id)
+    private val _listCategories = MutableLiveData<List<Category>>(emptyList())
+    val listCategories:LiveData<List<Category>> = _listCategories
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading:LiveData<Boolean> = _isLoading
+
+
+    fun createProduct(categoryName:String, name:String,price:Float,stock:Int,uri:String){
+        val category = listCategories.value!!.find { category -> category.name == categoryName }
+        val product = Product(product=name,price=price,stock=stock,uri=uri,categoryId=category!!.id)
         viewModelScope.launch {
             repository.insertProduct(product)
             _isCreated.value = true
         }
-        return true
     }
-
-    suspend fun getCategories(): List<Category>{
-        return withContext(Dispatchers.IO){
-            listCategories = repository.getAllCategoriesDB()
-            listCategories
+    fun loadCategories(){
+        viewModelScope.launch {
+            _isLoading.value = true
+            _listCategories.value = repository.getAllCategoriesDB()
+            _isLoading.value = false
         }
     }
-
+    fun editProduct(product: Product, lastItemSelected: String) {
+        val category = listCategories.value!!.find { category -> category.name == lastItemSelected }
+        viewModelScope.launch{
+            repository.updateProduct(product.copy( categoryId = category!!.id ))
+            _isCreated.value = true
+        }
+    }
 }

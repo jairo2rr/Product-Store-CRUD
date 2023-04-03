@@ -24,5 +24,6 @@
     <string name="txt_field_stock">Stock</string>
     <string name="txt_snackbar_go">Ir</string>
     <string name="txt_snackbar_permission">Debe aceptar los permisos para poder acceder a las imágenes.</string>
+    <string name="txt_actionbar_title_detail">Detalle del producto</string>
 
 </resources>

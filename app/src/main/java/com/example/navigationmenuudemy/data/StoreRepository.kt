@@ -15,15 +15,6 @@ class StoreRepository @Inject constructor(
     private val categoryDao: CategoryDao,
     private val productDao: ProductDao
 ){
-    suspend fun getAllProductsDB(): List<Product> {
-        val response = productDao.getAllProducts()
-        return response.map { it.toDomain() }
-    }
-
-    suspend fun getProductsForCategoryDB(categoryId:Int): List<Product> {
-        val response = productDao.findProductsFromCategory(categoryId)
-        return response.map { it.toDomain() }
-    }
 
     suspend fun getAllCategoriesDB():List<Category>{
         val response = categoryDao.getAllCategories()
@@ -34,9 +25,6 @@ class StoreRepository @Inject constructor(
         categoryDao.insertCategory(category.toEntity())
     }
 
-    suspend fun insertProduct(product:Product){
-        productDao.insertProduct(product.toEntity())
-    }
 
     suspend fun getCategoryXNameDB(name:String):List<Category>{
         val response = categoryDao.findCategoryXName(name)
@@ -50,9 +38,27 @@ class StoreRepository @Inject constructor(
     suspend fun deleteCategory(category: Category){
         categoryDao.deleteCategory(category.toEntity())
     }
+    suspend fun insertProduct(product:Product){
+        productDao.insertProduct(product.toEntity())
+    }
+    suspend fun getAllProductsDB(): List<Product> {
+        val response = productDao.getAllProducts()
+        return response.map { it.toDomain() }
+    }
+    suspend fun updateProduct(product: Product){
+        productDao.updateProduct(product.toEntity())
+    }
+    suspend fun getProductsForCategoryDB(categoryId:Int): List<Product> {
+        val response = productDao.findProductsFromCategory(categoryId)
+        return response.map { it.toDomain() }
+    }
 
     suspend fun findProductFromId(productId:Int):List<Product>{
         val response = productDao.findProductFromId(productId)
         return response.map { it.toDomain() }
+    }
+
+    suspend fun deleteProduct(product: Product){
+        productDao.deleteProduct(product.toEntity())
     }
 }
