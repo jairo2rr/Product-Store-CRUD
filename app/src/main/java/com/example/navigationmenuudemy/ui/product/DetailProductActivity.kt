@@ -45,9 +45,9 @@ class DetailProductActivity() : AppCompatActivity() {
                 openDialogProductFragment(product)
             }
             binding.imgDeleteProduct.setOnClickListener {
-                AlertDialog.Builder(this).setTitle("Aviso de acción").setNegativeButton("Eliminar"){dialog,number->
+                AlertDialog.Builder(this).setTitle(R.string.txt_alert_delete_product).setNegativeButton(R.string.txt_btn_delete){dialog,number->
                     deleteProduct()
-                }.setPositiveButton("Cancelar"){dialog,_->
+                }.setPositiveButton(R.string.txt_btn_cancel){dialog,_->
                     dialog.dismiss()
                 }.show()
             }

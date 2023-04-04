@@ -9,21 +9,32 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="txt_field_empty_error">Debe llenar este campo.</string>
-    <string name="txt_field_fill_error">Debe ingresar texto válido.</string>
-    <string name="txt_btn_update">Actualizar</string>
-    <string name="txt_btn_cancel">Cancelar</string>
-    <string name="txt_btn_create">Crear</string>
+    <!--Texto de inputs-->
     <string name="txt_field_price">Precio</string>
     <string name="txt_field_product_name">Nombre del producto</string>
     <string name="txt_field_category">Categoría</string>
-    <string name="txt_btn_add_cart">Agregar al carrito</string>
-    <string name="txt_btn_sell">Vender</string>
-    <string name="txt_title_dialog_product">Crear nuevo producto</string>
-    <string name="txt_btn_load_image">Cargar imagen</string>
     <string name="txt_field_stock">Stock</string>
+
+    <!--Texto de inputs (errores)-->
+    <string name="txt_field_empty_error">Debe llenar este campo.</string>
+    <string name="txt_field_fill_error">Debe ingresar texto válido.</string>
+
+    <!--Texto de dialogs/alert-->
+    <string name="txt_title_dialog_product">Crear nuevo producto</string>
     <string name="txt_snackbar_go">Ir</string>
     <string name="txt_snackbar_permission">Debe aceptar los permisos para poder acceder a las imágenes.</string>
+    <string name="txt_alert_delete_product">Está seguro que desea eliminar este producto?</string>
+
+    <!--Texto de actividades-->
     <string name="txt_actionbar_title_detail">Detalle del producto</string>
+
+    <!--Texto Botones-->
+    <string name="txt_btn_load_image">Cargar imagen</string>
+    <string name="txt_btn_add_cart">Agregar al carrito</string>
+    <string name="txt_btn_sell">Vender</string>
+    <string name="txt_btn_update">Actualizar</string>
+    <string name="txt_btn_cancel">Cancelar</string>
+    <string name="txt_btn_create">Crear</string>
+    <string name="txt_btn_delete">Eliminar</string>
 
 </resources>
