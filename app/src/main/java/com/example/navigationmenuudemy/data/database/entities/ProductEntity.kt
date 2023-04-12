@@ -12,6 +12,7 @@ data class ProductEntity(
     @ColumnInfo(name = "price") var price:Float=0.0f,
     @ColumnInfo(name = "stock") var stock:Int=0,
     @ColumnInfo(name = "uri") var uri:String,
+    @ColumnInfo(name = "favorite") var favorite:Boolean=false,
     @ColumnInfo(name = "categoryId") val categoryId:Int
 )
 
@@ -30,5 +31,6 @@ fun Product.toEntity() = ProductEntity(
     price = price,
     stock = stock,
     uri=uri,
+    favorite=favorite,
     categoryId = categoryId
 )

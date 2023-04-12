@@ -1,5 +1,6 @@
 package com.example.navigationmenuudemy.ui.product
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,5 +44,17 @@ class DetailProductViewModel @Inject constructor(
             repository.deleteProduct(product.value!!)
             _loading.value = false
         }
+    }
+
+    fun setFavorite() {
+        val newValue = !product.value!!.favorite
+        Log.d("FAVORITE_VALUE","value: $newValue")
+        viewModelScope.launch{
+            _loading.value = true
+            repository.updateProduct(product.value!!.copy( favorite = newValue ))
+            updateInfoProduct()
+            _loading.value = false
+        }
+
     }
 }

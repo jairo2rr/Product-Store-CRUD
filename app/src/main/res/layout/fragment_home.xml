@@ -26,7 +26,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/bg_searchview"
             app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/btnShoppingCart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:queryBackground="@android:color/transparent"
@@ -50,20 +50,24 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/btnShoppingCart"
             app:layout_constraintStart_toStartOf="@+id/searchView"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chFavorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:text="Favorito" />
             <com.google.android.material.chip.Chip
                 android:id="@+id/chCategories"
                 android:layout_width="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_height="wrap_content"
                 android:text="Categorías" />
             <com.google.android.material.chip.Chip
                 android:id="@+id/chMostSeller"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Más vendido" />
@@ -79,7 +83,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chgFilters" />
+            app:layout_constraintTop_toBottomOf="@+id/chgFilters"
+            tools:listitem="@layout/item_product" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

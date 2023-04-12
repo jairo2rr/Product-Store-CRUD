@@ -30,11 +30,13 @@
 
     <!--Texto Botones-->
     <string name="txt_btn_load_image">Cargar imagen</string>
-    <string name="txt_btn_add_cart">Agregar al carrito</string>
+    <string name="txt_btn_add_sale">Agregar a la venta</string>
     <string name="txt_btn_sell">Vender</string>
     <string name="txt_btn_update">Actualizar</string>
     <string name="txt_btn_cancel">Cancelar</string>
     <string name="txt_btn_create">Crear</string>
     <string name="txt_btn_delete">Eliminar</string>
+    <string name="txt_dialog_quantity_sale">Cuántas unidades desea?</string>
+    <string name="txt_btn_continue_sale">Continuar con la venta</string>
 
 </resources>

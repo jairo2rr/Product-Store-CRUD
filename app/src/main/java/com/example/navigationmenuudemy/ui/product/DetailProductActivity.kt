@@ -17,7 +17,7 @@ import com.example.navigationmenuudemy.ui.home.DialogProductFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailProductActivity() : AppCompatActivity() {
+class DetailProductActivity: AppCompatActivity() {
     companion object {
         const val PRODUCT_ID = "PRODUCT_ID"
         const val REQUEST_CODE = 1
@@ -36,25 +36,51 @@ class DetailProductActivity() : AppCompatActivity() {
             binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
         viewModel.product.observe(this) { product ->
-            binding.tvInfoProduct.text = "${product.id} - ${product.product}"
+            with(binding) {
+                tvInfoProduct.text = "${product.id} - ${product.product}"
+
+                tvProductDescription.text =
+                    StringBuilder().appendLine("${getString(R.string.txt_field_category)}: ${product.categoryId}\n")
+                        .appendLine("${getString(R.string.txt_field_price)}: ${product.price}\n").append("${getString(R.string.txt_field_stock)}: ${product.stock}")
+
+                imgEditProduct.setOnClickListener {
+                    openDialogProductFragment(product)
+                }
+
+                imgDeleteProduct.setOnClickListener {
+                    AlertDialog.Builder(this@DetailProductActivity)
+                        .setTitle(R.string.txt_alert_delete_product)
+                        .setNegativeButton(R.string.txt_btn_delete) { dialog, number ->
+                            deleteProduct()
+                        }.setPositiveButton(R.string.txt_btn_cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }.show()
+                }
+
+                fabFavoriteProduct.setOnClickListener {
+                    viewModel.setFavorite()
+                }
+                if(product.favorite){
+                    binding.fabFavoriteProduct.setImageResource(R.drawable.ic_favorite)
+                }else{
+                    binding.fabFavoriteProduct.setImageResource(R.drawable.ic_favorite_border)
+                }
+                btnAddToCart.setOnClickListener {
+                    continueAddSale()
+                }
+            }
             //initOpenDocumentLauncher(product.uri)
-            binding.tvProductDescription.text =
-                StringBuilder().appendLine("Categoría: ${product.categoryId}\n")
-                    .appendLine("Precio: ${product.price}\n").append("Stock: ${product.stock}")
-            binding.fabEditProduct.setOnClickListener {
-                openDialogProductFragment(product)
-            }
-            binding.imgDeleteProduct.setOnClickListener {
-                AlertDialog.Builder(this).setTitle(R.string.txt_alert_delete_product).setNegativeButton(R.string.txt_btn_delete){dialog,number->
-                    deleteProduct()
-                }.setPositiveButton(R.string.txt_btn_cancel){dialog,_->
-                    dialog.dismiss()
-                }.show()
-            }
         }
+//        viewModel.favorite.observe(this) {
+//            if (it) {
+//                binding.fabFavoriteProduct.setImageResource(R.drawable.ic_favorite)
+//                return@observe
+//            }
+//            binding.fabFavoriteProduct.setImageResource(R.drawable.ic_favorite_border)
+//        }
     }
 
-    private fun deleteProduct(){
+    private fun deleteProduct() {
         viewModel.deleteProduct()
         //onDelete()
         finish()
@@ -76,5 +102,11 @@ class DetailProductActivity() : AppCompatActivity() {
 
     private fun canUpdate(anyChange: Boolean) {
         viewModel.updateInfoProduct()
+    }
+
+    private fun continueAddSale() {
+        val dialog =
+            DialogAddSaleFragment()
+        dialog.show(supportFragmentManager, "showDialogProduct")
     }
 }

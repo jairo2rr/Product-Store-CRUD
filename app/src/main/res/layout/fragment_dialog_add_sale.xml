@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTitleDialogCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/txt_dialog_quantity_sale"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDecreaseQuantity"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:backgroundTint="@color/md_theme_light_error"
+        app:icon="@drawable/ic_decrease"
+        app:layout_constraintBottom_toBottomOf="@id/layoutCategoryName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutCategoryName" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutCategoryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:hint="Cantidad"
+        app:layout_constraintEnd_toStartOf="@id/btnIncreaseQuantity"
+        app:layout_constraintStart_toEndOf="@id/btnDecreaseQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleDialogCategory">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCategoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnIncreaseQuantity"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:icon="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutCategoryName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleDialogCategory"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseQuantity" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/md_theme_light_error"
+        android:text="@string/txt_btn_cancel"
+        android:textColor="@color/md_theme_light_onPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/btnContinueSale"
+        app:layout_constraintTop_toTopOf="@id/btnContinueSale" />
+
+    <Button
+        android:id="@+id/btnContinueSale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:text="@string/txt_btn_continue_sale"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnIncreaseQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCategoryName"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

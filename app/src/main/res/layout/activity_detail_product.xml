@@ -7,15 +7,17 @@
     tools:context=".ui.product.DetailProductActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEditProduct"
+        android:id="@+id/fabFavoriteProduct"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:src="@drawable/ic_baseline_edit_24"
+        android:contentDescription="@string/txt_btn_update"
+        android:src="@drawable/ic_favorite_border"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:contentDescription="@string/txt_btn_update" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
     <TextView
         android:id="@+id/tvInfoProduct"
         android:layout_width="wrap_content"
@@ -33,10 +35,10 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/wp_porschegt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/wp_porschegt"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvProductDescription"
@@ -53,43 +55,46 @@
         android:id="@+id/btnAddToCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:text="@string/txt_btn_add_sale"
         app:icon="@drawable/ic_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProductDescription"
-        android:text="@string/txt_btn_add_cart"/>
-
-    <Button
-        android:id="@+id/btnBuy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="@string/txt_btn_sell"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddToCart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAddToCart" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductDescription" />
 
     <ProgressBar
         android:id="@+id/pbLoading"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <ImageView
-        android:id="@+id/imgDeleteProduct"
+    <Button
+        android:id="@+id/imgEditProduct"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        app:tint="@color/md_theme_light_error"
+        style="@style/Widget.Material3.Button.IconButton"
         app:layout_constraintBottom_toBottomOf="@+id/tvInfoProduct"
         app:layout_constraintStart_toEndOf="@+id/tvInfoProduct"
         app:layout_constraintTop_toTopOf="@+id/tvInfoProduct"
-        app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
+        app:icon="@drawable/ic_baseline_edit_24"
+        app:iconTint="@color/md_theme_light_tertiary"
+        />
+
+    <Button
+        android:id="@+id/imgDeleteProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:layout_constraintBottom_toBottomOf="@+id/imgEditProduct"
+        app:layout_constraintStart_toEndOf="@+id/imgEditProduct"
+        app:layout_constraintTop_toTopOf="@+id/imgEditProduct"
+        app:icon="@drawable/ic_baseline_delete_forever_24"
+        app:iconTint="@color/md_theme_light_error"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

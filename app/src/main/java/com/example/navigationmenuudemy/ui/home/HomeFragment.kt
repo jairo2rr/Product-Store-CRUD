@@ -6,9 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import androidx.fragment.app.viewModels
 import com.example.navigationmenuudemy.R
 import com.example.navigationmenuudemy.databinding.FragmentHomeBinding
 import com.example.navigationmenuudemy.domain.model.Product
+import com.example.navigationmenuudemy.ui.extension.printToLog
 import com.example.navigationmenuudemy.ui.extension.snackbar
 import com.example.navigationmenuudemy.ui.extension.snackbarWithAction
 import com.example.navigationmenuudemy.ui.extension.toast
@@ -50,6 +53,35 @@ class HomeFragment : Fragment() {
             openDialogProductFragment()
             //requestPermission()
         }
+        initOnClickChips()
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(text: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                if (text != null && text.trim() != "") {
+                    viewModel.searchProducts(text)
+                }
+                if (text != null && text.trim() == "") {
+                    viewModel.updateList()
+                }
+                return true
+            }
+
+        })
+    }
+
+    private fun initOnClickChips() {
+        with(binding) {
+            chFavorites.setOnClickListener {
+                if (!chFavorites.isChecked ){
+                    viewModel.updateList()
+                    return@setOnClickListener
+                }
+                viewModel.filterList("favorites")
+            }
+        }
     }
 
     private fun startProductActivity(product: Product) {
@@ -59,7 +91,8 @@ class HomeFragment : Fragment() {
         }
         startActivity(intent)
     }
-//    private fun requestPermission() {
+
+    //    private fun requestPermission() {
 //        requestPermissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
 //    }
     private fun openDialogProductFragment() {
