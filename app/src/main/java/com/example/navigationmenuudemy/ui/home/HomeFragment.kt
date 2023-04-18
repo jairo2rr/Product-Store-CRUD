@@ -99,15 +99,13 @@ class HomeFragment : Fragment() {
 
         val dialog =
             DialogProductFragment(onCreateProduct = {
-                canUpdate(it)
+                canUpdate()
             })
         dialog.show(parentFragmentManager, "showDialogProduct")
     }
 
-    private fun canUpdate(answer: Boolean) {
-        if (answer) {
-            viewModel.uploadProducts()
-        }
+    private fun canUpdate() {
+        viewModel.uploadProducts()
     }
 
     override fun onStart() {

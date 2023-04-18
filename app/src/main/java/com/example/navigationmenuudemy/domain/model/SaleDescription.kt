@@ -7,7 +7,7 @@ import com.example.navigationmenuudemy.data.database.entities.SaleEntity
 data class SaleDescription(
     val id:Int=0,
     var quantity:Int,
-    var discount:Float,
+    var discount:Float=0.0f,
     val saleId:Int,
     val productId:Int
 )

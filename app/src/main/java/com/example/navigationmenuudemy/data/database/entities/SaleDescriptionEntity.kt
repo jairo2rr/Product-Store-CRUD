@@ -9,7 +9,7 @@ data class SaleDescriptionEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id:Int =0,
     @ColumnInfo(name = "quantity") var quantity:Int,
-    @ColumnInfo(name = "discount") var discount:Float,
+    @ColumnInfo(name = "discount") var discount:Float=0.0f,
     @ColumnInfo(name = "saleId") val saleId:Int,
     @ColumnInfo(name = "productId") val productId:Int
 )

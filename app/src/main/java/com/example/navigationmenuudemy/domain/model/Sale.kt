@@ -5,8 +5,8 @@ import java.util.Date
 
 data class Sale(
     val id:Int=0,
-    var dateSale:Date,
-    var state:Byte
+    var dateSale:String,
+    var state:Byte = 0
 )
 
 fun SaleEntity.toDomain() = Sale(

@@ -18,6 +18,7 @@
     <!--Texto de inputs (errores)-->
     <string name="txt_field_empty_error">Debe llenar este campo.</string>
     <string name="txt_field_fill_error">Debe ingresar texto válido.</string>
+    <string name="txt_field_stock_error">Supera el stock del producto.</string>
 
     <!--Texto de dialogs/alert-->
     <string name="txt_title_dialog_product">Crear nuevo producto</string>
@@ -38,5 +39,6 @@
     <string name="txt_btn_delete">Eliminar</string>
     <string name="txt_dialog_quantity_sale">Cuántas unidades desea?</string>
     <string name="txt_btn_continue_sale">Continuar con la venta</string>
+
 
 </resources>

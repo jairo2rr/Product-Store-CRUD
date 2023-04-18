@@ -30,4 +30,12 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideProductDao(db:StoreDatabase)=db.getProductDao()
+
+    @Provides
+    @Singleton
+    fun provideSaleDao(db:StoreDatabase)=db.getSaleDao()
+
+    @Provides
+    @Singleton
+    fun provideSaleDescriptionDao(db:StoreDatabase)=db.getSaleDescriptionDao()
 }

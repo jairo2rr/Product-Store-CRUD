@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DialogProductFragment(
-    private val onCreateProduct: (Boolean) -> Unit,
+    private val onCreateProduct: () -> Unit,
     private val product: Product? = null,
 ) : DialogFragment() {
     private lateinit var binding: FragmentDialogProductBinding
@@ -103,7 +103,7 @@ class DialogProductFragment(
         }
         viewModel.isCreated.observe(this) {
             if (it) {
-                onCreateProduct(it)
+                onCreateProduct()
                 dismiss()
             }
         }

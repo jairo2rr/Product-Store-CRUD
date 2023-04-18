@@ -1,15 +1,11 @@
 package com.example.navigationmenuudemy.ui.product
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.example.navigationmenuudemy.R
 import com.example.navigationmenuudemy.databinding.ActivityDetailProductBinding
 import com.example.navigationmenuudemy.domain.model.Product
@@ -66,7 +62,7 @@ class DetailProductActivity: AppCompatActivity() {
                     binding.fabFavoriteProduct.setImageResource(R.drawable.ic_favorite_border)
                 }
                 btnAddToCart.setOnClickListener {
-                    continueAddSale()
+                    continueAddSale(product)
                 }
             }
             //initOpenDocumentLauncher(product.uri)
@@ -95,18 +91,20 @@ class DetailProductActivity: AppCompatActivity() {
 
         val dialog =
             DialogProductFragment(product = product, onCreateProduct = {
-                canUpdate(it)
+                canUpdate()
             })
         dialog.show(supportFragmentManager, "DialogProduct")
     }
 
-    private fun canUpdate(anyChange: Boolean) {
+    private fun canUpdate() {
         viewModel.updateInfoProduct()
     }
 
-    private fun continueAddSale() {
+    private fun continueAddSale(product: Product) {
         val dialog =
-            DialogAddSaleFragment()
+            DialogAddSaleFragment(product=product) {
+                canUpdate()
+            }
         dialog.show(supportFragmentManager, "showDialogProduct")
     }
 }
