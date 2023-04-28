@@ -51,7 +51,7 @@ class DetailProductViewModel @Inject constructor(
         Log.d("FAVORITE_VALUE","value: $newValue")
         viewModelScope.launch{
             _loading.value = true
-            repository.updateProduct(product.value!!.copy( favorite = newValue ))
+            repository.upsertProduct(product.value!!.copy( favorite = newValue ))
             updateInfoProduct()
             _loading.value = false
         }

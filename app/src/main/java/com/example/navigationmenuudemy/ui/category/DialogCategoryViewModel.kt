@@ -21,7 +21,7 @@ class DialogCategoryViewModel @Inject constructor(
     val isCreated:LiveData<Boolean> = _isCreated
     fun createCategory(category:Category){
         viewModelScope.launch {
-            repository.insertCategory(category)
+            repository.upsertCategory(category)
             _isCreated.value = true
         }
     }
@@ -35,7 +35,7 @@ class DialogCategoryViewModel @Inject constructor(
 
     fun editCategory(category: Category) {
         viewModelScope.launch{
-            repository.updateCategory(category)
+            repository.upsertCategory(category)
             _isCreated.value = true
         }
     }

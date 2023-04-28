@@ -7,10 +7,7 @@ import com.example.navigationmenuudemy.data.database.dao.CategoryDao
 import com.example.navigationmenuudemy.data.database.dao.ProductDao
 import com.example.navigationmenuudemy.data.database.dao.SaleDao
 import com.example.navigationmenuudemy.data.database.dao.SaleDescriptionDao
-import com.example.navigationmenuudemy.data.database.entities.CategoryEntity
-import com.example.navigationmenuudemy.data.database.entities.ProductEntity
-import com.example.navigationmenuudemy.data.database.entities.SaleEntity
-import com.example.navigationmenuudemy.data.database.entities.toEntity
+import com.example.navigationmenuudemy.data.database.entities.*
 import com.example.navigationmenuudemy.domain.model.*
 import javax.inject.Inject
 
@@ -26,8 +23,8 @@ class StoreRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    suspend fun insertCategory(category: Category){
-        categoryDao.insertCategory(category.toEntity())
+    suspend fun upsertCategory(category: Category){
+        categoryDao.upsertCategory(category.toEntity())
     }
 
 
@@ -36,27 +33,19 @@ class StoreRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    suspend fun updateCategory(category: Category){
-        categoryDao.updateCategory(category.toEntity())
-    }
-
     suspend fun deleteCategory(category: Category){
         categoryDao.deleteCategory(category.toEntity())
     }
     //Product
-    suspend fun insertProduct(product:Product){
-        productDao.insertProduct(product.toEntity())
+    suspend fun upsertProduct(product:Product){
+        productDao.upsertProduct(product.toEntity())
     }
     suspend fun getAllProductsDB(): List<Product> {
         val response = productDao.getAllProducts()
         return response.map { it.toDomain() }
     }
-    suspend fun updateProduct(product: Product){
-        productDao.updateProduct(product.toEntity())
-    }
-    suspend fun getProductsForCategoryDB(categoryId:Int): List<Product> {
-        val response = productDao.findProductsFromCategory(categoryId)
-        return response.map { it.toDomain() }
+    suspend fun getProductsWithSaleDescriptions(productId:Int): List<ProductWithSaleDescriptions> {
+        return productDao.getProductWithSaleDescriptions(productId)
     }
 
     suspend fun findProductFromId(productId:Int):List<Product>{
@@ -68,9 +57,13 @@ class StoreRepository @Inject constructor(
         productDao.deleteProduct(product.toEntity())
     }
 
+    suspend fun getTopSellingProducts():List<TopSellingProduct>{
+        return productDao.getTopSellingProducts()
+    }
+
     //Sale
-    suspend fun insertSale(sale:Sale){
-        saleDao.insertSale(sale.toEntity())
+    suspend fun upsertSale(sale:Sale){
+        saleDao.upsertSale(sale.toEntity())
     }
 
     suspend fun getAllSales():List<Sale>{
@@ -78,30 +71,30 @@ class StoreRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    suspend fun updateSale(sale:Sale){
-        saleDao.updateSale(sale.toEntity())
-    }
-
     suspend fun getSaleXState(state:Int):List<Sale>{
         val response = saleDao.getSaleXState(state)
         return response.map { it.toDomain() }
     }
 
-    //SaleDescription
-    suspend fun insertSaleDescription(saleDescription: SaleDescription){
-        saleDescriptionDao.insertSaleDescription(saleDescription.toEntity())
+    suspend fun getSaleWithDescriptions(saleId:Int):List<SaleWithDescriptions>{
+        return saleDao.getSaleWithDescriptions(saleId)
     }
 
-    suspend fun getDescriptionsForSale(saleId:Int):List<SaleDescription>{
-        val response = saleDescriptionDao.getDescriptionsForSale(saleId)
-        return response.map { it.toDomain() }
+    //SaleDescription
+    suspend fun upsertSaleDescription(saleDescription: SaleDescription){
+        saleDescriptionDao.upsertSaleDescription(saleDescription.toEntity())
+    }
+
+    suspend fun getSaleDescription(saleDescriptionId:Int):SaleDescription{
+        val response = saleDescriptionDao.getSaleDescription(saleDescriptionId)
+        return response.toDomain()
     }
 
     suspend fun deleteSaleDescription(saleDescription: SaleDescription){
         saleDescriptionDao.deleteSaleDescription(saleDescription.toEntity())
     }
 
-    suspend fun updateSaleDescription(saleDescription: SaleDescription){
-        saleDescriptionDao.updateSaleDescription(saleDescription.toEntity())
+    suspend fun getSaleDescriptionByProductId(productId: Int,saleId:Int):List<SaleDescription>{
+        return saleDescriptionDao.getSaleDescriptionByProductId(productId,saleId).map { it.toDomain() }
     }
 }

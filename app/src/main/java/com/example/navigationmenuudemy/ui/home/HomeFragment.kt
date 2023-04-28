@@ -23,6 +23,7 @@ import com.example.navigationmenuudemy.ui.extension.snackbar
 import com.example.navigationmenuudemy.ui.extension.snackbarWithAction
 import com.example.navigationmenuudemy.ui.extension.toast
 import com.example.navigationmenuudemy.ui.product.DetailProductActivity
+import com.example.navigationmenuudemy.ui.sale.SaleDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,6 +54,9 @@ class HomeFragment : Fragment() {
             openDialogProductFragment()
             //requestPermission()
         }
+        binding.btnShoppingCart.setOnClickListener {
+            startSaleDetailActivity()
+        }
         initOnClickChips()
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(text: String?): Boolean {
@@ -75,11 +79,18 @@ class HomeFragment : Fragment() {
     private fun initOnClickChips() {
         with(binding) {
             chFavorites.setOnClickListener {
-                if (!chFavorites.isChecked ){
+                if (!chFavorites.isChecked) {
                     viewModel.updateList()
                     return@setOnClickListener
                 }
                 viewModel.filterList("favorites")
+            }
+            chMostSeller.setOnClickListener {
+                if (!chMostSeller.isChecked) {
+                    viewModel.updateList()
+                    return@setOnClickListener
+                }
+                viewModel.filterList("mostSeller")
             }
         }
     }
@@ -89,6 +100,11 @@ class HomeFragment : Fragment() {
         intent.apply {
             putExtra(DetailProductActivity.PRODUCT_ID, product.id)
         }
+        startActivity(intent)
+    }
+
+    private fun startSaleDetailActivity() {
+        val intent = Intent(context, SaleDetailActivity::class.java)
         startActivity(intent)
     }
 

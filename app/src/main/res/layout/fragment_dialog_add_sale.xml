@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:text="1"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -73,13 +74,12 @@
         android:id="@+id/btnContinueSale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="36dp"
         android:layout_marginBottom="24dp"
         android:text="@string/txt_btn_continue_sale"
-        android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnIncreaseQuantity"
-        app:layout_constraintTop_toBottomOf="@+id/layoutCategoryName"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/layoutCategoryName" />
 
     <TextView
         android:id="@+id/tvStock"
@@ -91,4 +91,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTitleDialogCategory"
         tools:text="Stock: 3" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:progressTint="@color/md_theme_dark_inverseSurface"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/btnContinueSale"
+        app:layout_constraintEnd_toEndOf="@+id/btnContinueSale"
+        app:layout_constraintStart_toStartOf="@+id/btnContinueSale"
+        app:layout_constraintTop_toTopOf="@+id/btnContinueSale" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

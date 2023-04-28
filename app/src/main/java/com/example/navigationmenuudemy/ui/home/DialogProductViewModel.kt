@@ -27,7 +27,7 @@ class DialogProductViewModel @Inject constructor(
         val category = listCategories.value!!.find { category -> category.name == categoryName }
         val product = Product(product=name,price=price,stock=stock,uri=uri,categoryId=category!!.id)
         viewModelScope.launch {
-            repository.insertProduct(product)
+            repository.upsertProduct(product)
             _isCreated.value = true
         }
     }
@@ -41,7 +41,7 @@ class DialogProductViewModel @Inject constructor(
     fun editProduct(product: Product, lastItemSelected: String) {
         val category = listCategories.value!!.find { category -> category.name == lastItemSelected }
         viewModelScope.launch{
-            repository.updateProduct(product.copy( categoryId = category!!.id ))
+            repository.upsertProduct(product.copy( categoryId = category!!.id ))
             _isCreated.value = true
         }
     }

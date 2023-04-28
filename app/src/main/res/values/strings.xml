@@ -25,9 +25,11 @@
     <string name="txt_snackbar_go">Ir</string>
     <string name="txt_snackbar_permission">Debe aceptar los permisos para poder acceder a las imágenes.</string>
     <string name="txt_alert_delete_product">Está seguro que desea eliminar este producto?</string>
+    <string name="txt_alert_delete_sale">Está seguro que desea cancelar la venta?</string>
 
     <!--Texto de actividades-->
     <string name="txt_actionbar_title_detail">Detalle del producto</string>
+    <string name="txt_actionbar_title_sale">Información de venta</string>
 
     <!--Texto Botones-->
     <string name="txt_btn_load_image">Cargar imagen</string>
@@ -35,10 +37,14 @@
     <string name="txt_btn_sell">Vender</string>
     <string name="txt_btn_update">Actualizar</string>
     <string name="txt_btn_cancel">Cancelar</string>
+    <string name="txt_btn_edit">Editar</string>
     <string name="txt_btn_create">Crear</string>
     <string name="txt_btn_delete">Eliminar</string>
     <string name="txt_dialog_quantity_sale">Cuántas unidades desea?</string>
     <string name="txt_btn_continue_sale">Continuar con la venta</string>
+    <string name="txt_sale_subtotal">Sub total</string>
+    <string name="txt_btn_register_sale">Registrar venta</string>
+    <string name="txt_btn_cancel_sale">Cancelar venta</string>
 
 
 </resources>

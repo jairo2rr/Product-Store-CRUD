@@ -14,22 +14,22 @@ data class SaleDescriptionEntity(
     @ColumnInfo(name = "productId") val productId:Int
 )
 
-data class SaleDescriptionWithSale(
+data class SaleWithDescriptions(
     @Embedded val sale: SaleEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "saleId"
     )
-    val salesDescription:List<SaleDescriptionEntity>
+    val saleDescriptions:List<SaleDescriptionEntity>
 )
 
-data class SaleDescriptionWithProducts(
+data class ProductWithSaleDescriptions(
     @Embedded val sale: ProductEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "productId"
     )
-    val salesDescription:List<SaleDescriptionEntity>
+    val saleDescriptions:List<SaleDescriptionEntity>
 )
 
 fun SaleDescription.toEntity() = SaleDescriptionEntity(

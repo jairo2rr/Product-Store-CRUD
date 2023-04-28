@@ -49,7 +49,18 @@ class HomeViewModel @Inject constructor(
         when(filter){
             "favorites"->
                 _listProducts.value = _listLoaded.value!!.filter { it.favorite }
-            else -> "NOFILTER".printToLog()
+            "mostSeller" -> getTopProducts()
+        }
+    }
+
+    private fun getTopProducts(){
+        viewModelScope.launch {
+            val listTopProducts = repository.getTopSellingProducts()
+            val extraList = mutableListOf<Product>()
+            listTopProducts.forEach {
+                extraList.add(repository.findProductFromId(it.id).first())
+            }
+            _listProducts.value = extraList.toList()
         }
     }
 

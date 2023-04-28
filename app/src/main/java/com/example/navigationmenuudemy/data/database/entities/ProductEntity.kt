@@ -25,6 +25,11 @@ data class CategoryWithProducts(
     val products:List<ProductEntity>
 )
 
+data class  TopSellingProduct(
+    @ColumnInfo(name = "productId") val id: Int,
+    @ColumnInfo(name = "totalQuantity") val totalQuantity: Int
+)
+
 fun Product.toEntity() = ProductEntity(
     id=id,
     product = product,

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.navigationmenuudemy.R
 import com.example.navigationmenuudemy.databinding.ActivityDetailProductBinding
 import com.example.navigationmenuudemy.domain.model.Product
+import com.example.navigationmenuudemy.ui.extension.alertDialog
+import com.example.navigationmenuudemy.ui.extension.toast
 import com.example.navigationmenuudemy.ui.home.DialogProductFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,13 +46,7 @@ class DetailProductActivity: AppCompatActivity() {
                 }
 
                 imgDeleteProduct.setOnClickListener {
-                    AlertDialog.Builder(this@DetailProductActivity)
-                        .setTitle(R.string.txt_alert_delete_product)
-                        .setNegativeButton(R.string.txt_btn_delete) { dialog, number ->
-                            deleteProduct()
-                        }.setPositiveButton(R.string.txt_btn_cancel) { dialog, _ ->
-                            dialog.dismiss()
-                        }.show()
+                    alertDialog(actionNegative = {deleteProduct()}, titleMessage = R.string.txt_alert_delete_product)
                 }
 
                 fabFavoriteProduct.setOnClickListener {
@@ -104,6 +100,7 @@ class DetailProductActivity: AppCompatActivity() {
         val dialog =
             DialogAddSaleFragment(product=product) {
                 canUpdate()
+                toast("Se agregó a la venta con éxito!.")
             }
         dialog.show(supportFragmentManager, "showDialogProduct")
     }

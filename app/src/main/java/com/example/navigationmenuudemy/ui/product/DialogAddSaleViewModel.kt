@@ -11,6 +11,7 @@ import com.example.navigationmenuudemy.data.StoreRepository
 import com.example.navigationmenuudemy.domain.model.Sale
 import com.example.navigationmenuudemy.domain.model.SaleDescription
 import com.example.navigationmenuudemy.ui.extension.isNull
+import com.example.navigationmenuudemy.ui.extension.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class DialogAddSaleViewModel @Inject constructor(
 ) : ViewModel() {
     private val _isCreated = MutableLiveData<Boolean>(false)
     val isCreated:LiveData<Boolean> = _isCreated
-    private val _loading = MutableLiveData<Boolean>()
+    private val _loading = MutableLiveData<Boolean>(false)
     val loading: LiveData<Boolean> = _loading
 
     private suspend fun verifySaleExists(): Sale? {
@@ -50,24 +51,32 @@ class DialogAddSaleViewModel @Inject constructor(
                         Log.d("SALE_CREATE","$it get")
                     }
                 }
-                _loading.value = false
-                _isCreated.value = true
             }
         } catch (exception: Exception) {
             println(exception.toString())
+        } finally {
+            _loading.value = false
         }
 
     }
 
     private fun createSaleDescription(quantity: Int, productId: Int, saleId: Int) {
         viewModelScope.launch {
-            //Crear con los parametros requeridos
-            repository.insertSaleDescription(SaleDescription(quantity = quantity,
-                productId = productId,
-                saleId = saleId))
+            //1. Buscar si el producto ya esta en algun description
+            val saleDescriptionFound = repository.getSaleDescriptionByProductId(productId,saleId)
             val product = repository.findProductFromId(productId).first()
-            repository.updateProduct(product.copy(stock = (product.stock - quantity) ))
-
+            //2. Modificar la cantidad del description
+            saleDescriptionFound.printToLog()
+            if(saleDescriptionFound.isNotEmpty()){
+                repository.upsertSaleDescription(saleDescriptionFound[0].copy(quantity = saleDescriptionFound[0].quantity + quantity))
+            }else{
+                val newSaleDescription = SaleDescription(quantity = quantity,
+                    productId = productId,
+                    saleId = saleId)
+                repository.upsertSaleDescription(newSaleDescription)
+            }
+            repository.upsertProduct(product.copy(stock = (product.stock - quantity) ))
+            _isCreated.value = true
         }
     }
 
@@ -76,7 +85,7 @@ class DialogAddSaleViewModel @Inject constructor(
         val currentDate = LocalDate.now()
         val dateString = currentDate.toString()
         return withContext(Dispatchers.IO){
-            repository.insertSale(Sale(dateSale = dateString))
+            repository.upsertSale(Sale(dateSale = dateString))
             verifySaleExists()
         }
     }

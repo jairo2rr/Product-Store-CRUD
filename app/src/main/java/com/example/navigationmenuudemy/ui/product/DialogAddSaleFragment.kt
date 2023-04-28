@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import com.example.navigationmenuudemy.R
 import com.example.navigationmenuudemy.databinding.FragmentDialogAddSaleBinding
 import com.example.navigationmenuudemy.domain.model.Product
+import com.example.navigationmenuudemy.ui.extension.goneIf
+import com.example.navigationmenuudemy.ui.extension.visibleIf
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +28,7 @@ class DialogAddSaleFragment(private val product: Product, private val onAddSale:
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
         initComponents()
+        initViewModels()
         return builder.create()
 
     }
@@ -46,14 +49,21 @@ class DialogAddSaleFragment(private val product: Product, private val onAddSale:
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.isCreated.observe(viewLifecycleOwner){
+    private fun initViewModels(){
+        viewModel.isCreated.observe(this){
             if(it){
+                onAddSale()
                 dismiss()
             }
         }
+        viewModel.loading.observe(this){ isLoading ->
+            binding.pbLoading visibleIf isLoading
+            if(isLoading){
+                binding.btnContinueSale.text = ""
+            }
+        }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun verifyCorrectQuantity() {
@@ -63,7 +73,6 @@ class DialogAddSaleFragment(private val product: Product, private val onAddSale:
             return
         }
         viewModel.intentCreateSale(product.id,valueInput)
-        onAddSale()
     }
 
     private fun increaseNumber() {
