@@ -18,4 +18,7 @@ interface SaleDao {
     @Transaction
     @Query("SELECT * FROM sale_table WHERE id=:saleId")
     suspend fun getSaleWithDescriptions(saleId:Int):List<SaleWithDescriptions>
+
+    @Query("SELECT COUNT(id) FROM sale_table WHERE state =:state")
+    suspend fun getCountSales(state:Int):Int
 }

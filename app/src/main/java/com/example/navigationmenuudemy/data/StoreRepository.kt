@@ -80,6 +80,10 @@ class StoreRepository @Inject constructor(
         return saleDao.getSaleWithDescriptions(saleId)
     }
 
+    suspend fun getCountSales(state: Int = 1):Int{
+        return saleDao.getCountSales(state)
+    }
+
     //SaleDescription
     suspend fun upsertSaleDescription(saleDescription: SaleDescription){
         saleDescriptionDao.upsertSaleDescription(saleDescription.toEntity())

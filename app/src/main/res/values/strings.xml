@@ -45,6 +45,12 @@
     <string name="txt_sale_subtotal">Sub total</string>
     <string name="txt_btn_register_sale">Registrar venta</string>
     <string name="txt_btn_cancel_sale">Cancelar venta</string>
+    <string name="score_sales">Ventas</string>
+    <string name="score_total">Total</string>
+    <string name="option_history_sale">Historial de ventas</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_category">Categorias</string>
+    <string name="menu_profile">Perfil</string>
 
 
 </resources>
